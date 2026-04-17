@@ -227,6 +227,6 @@ def parse_ajbell_data(data: list[dict], is_mf: bool) -> list[dict]:
             else:
                 url = f'{base}{fund["ExchangeCode"]}:{fund["Symbol"]}'
             funds.append(dict(name=name, isin=isin, url=url))
-        except:
-            print("parse_ajbell_data error: ", fund)
+        except KeyError as e:
+            print(f"{fund}, is_mf: {is_mf}, error: {e}")
     return funds
