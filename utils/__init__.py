@@ -218,14 +218,17 @@ def parse_ajbell_data(data: list[dict], is_mf: bool) -> list[dict]:
     base = "https://www.ajbell.co.uk/market-research/"
     funds = []
     for fund in data:
-        try:
-            name = fund["name"]
-            isin = fund.get("isin")
-            if is_mf:
-                url = f'{base}FUND:{fund["sedol"]}'
-            else:
-                url = f'{base}{fund["ExchangeCode"]}:{fund["Symbol"]}'
-            funds.append(dict(name=name, isin=isin, url=url))
-        except KeyError as e:
-            print(f"{fund}, is_mf: {is_mf}, error: {e}")
+        name = fund.get("name")
+        isin = fund.get("isin")
+        url = None
+        if is_mf:
+            sedol = fund.get("sedol")
+            if sedol:
+                url = f'{base}FUND:{sedol}'
+        else:
+            exchange_code = fund.get("ExchangeCode")
+            symbol = fund.get("Symbol")
+            if symbol and exchange_code:
+                url = f'{base}{exchange_code}:{symbol}'
+        funds.append(dict(name=name, isin=isin, url=url))
     return funds
