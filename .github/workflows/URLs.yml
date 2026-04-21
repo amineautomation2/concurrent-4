@@ -45,6 +45,7 @@ jobs:
       - run: sleep ${{ env.IDLE_TIME }}
 
   url-etf:
+    needs: wait-after-investment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -81,6 +82,7 @@ jobs:
       - run: sleep ${{ env.IDLE_TIME }}
 
   url-mf:
+    needs: wait-after-etf
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
