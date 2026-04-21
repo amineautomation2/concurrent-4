@@ -12,17 +12,16 @@ def fidelity_runner(id: int, max_w: int, sheet: str) -> None:
     funds_per_worker = get_data_by_worker_id(id, max_w, data)
     funds_per_worker = get_fidelity_keyword(driver, funds_per_worker)
     csv = f"fidelity_{id}_{sheet.lower()}.csv"
-    for fund in funds_per_worker:
-        fund.pop("sheet")
     write_csv_by_id(
         csv,
-        funds_per_worker[:1],
+        funds_per_worker,
         [
             "index",
             "name",
             "isin",
             "url",
             "keyword",
+            "sheet",
         ])
     driver.quit()
 
