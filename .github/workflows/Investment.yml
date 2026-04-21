@@ -3,6 +3,8 @@ name: Investment
 on:
   workflow_call:
   workflow_dispatch:
+env:
+  PROJECT_NAME: fidelity
 
 jobs:
   worker:
@@ -30,11 +32,11 @@ jobs:
       - name: Run Scraper Chunk
         run: python main.py --id ${{ matrix.chunk }} --sheet Investment
 
-      - name: Upload Investment Partial Data
+      - name: Upload ETF Partial Data
         uses: actions/upload-artifact@v6
         with:
-          name: results-it-csv-${{ matrix.chunk }}
-          path: csv/ajbell_${{ matrix.chunk }}_investment.csv
+          name: results-investment-csv-${{ matrix.chunk }}
+          path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_investment.csv
           if-no-files-found: error
 
   merge-results:
@@ -58,20 +60,20 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Download Investment Artifacts
+      - name: Download All Artifacts
         uses: actions/download-artifact@v6
         with:
           path: csv
-          pattern: results-it-csv-*
+          pattern: results-investment-csv-*
           merge-multiple: true
 
       - name: Merge and Commit
         run: python main.py --sheet Investment
 
-      - name: Upload Partial Data
+      - name: Upload Spreadsheet
         uses: actions/upload-artifact@v6
         with:
-          name: ajbell-investment
+          name: ${{env.PROJECT_NAME}}-Investment
           path: spreadsheet
           if-no-files-found: error
 

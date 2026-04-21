@@ -4,11 +4,12 @@ import csv
 import sys
 from typing import Any
 import openpyxl
-from utils import save_xlsx
+from utils import get_xlsx_filepath, save_xlsx
 
 
-def get_xlsx_data(filename, sheet_name) -> list[dict]:
-    wb = openpyxl.load_workbook(filename)
+def get_xlsx_data(spreadsheet, sheet_name) -> list[dict]:
+    xlsx = get_xlsx_filepath(spreadsheet)
+    wb = openpyxl.load_workbook(xlsx)
     ws = wb[sheet_name]
     data = []
     row_start = 2

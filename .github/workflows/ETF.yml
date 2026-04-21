@@ -3,6 +3,8 @@ name: ETF
 on:
   workflow_call:
   workflow_dispatch:
+env:
+  PROJECT_NAME: fidelity
 
 jobs:
   worker:
@@ -34,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: results-etf-csv-${{ matrix.chunk }}
-          path: csv/ajbell_${{ matrix.chunk }}_etf.csv
+          path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_etf.csv
           if-no-files-found: error
 
   merge-results:
@@ -71,7 +73,7 @@ jobs:
       - name: Upload Spreadsheet
         uses: actions/upload-artifact@v6
         with:
-          name: ajbell-etf
+          name: ${{env.PROJECT_NAME}}-etf
           path: spreadsheet
           if-no-files-found: error
 

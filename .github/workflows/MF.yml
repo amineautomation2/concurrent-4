@@ -3,9 +3,8 @@ name: MF
 on:
   workflow_call:
   workflow_dispatch:
-
 env:
-  ARTIFACT_NAME: results-mf-csv
+  PROJECT_NAME: fidelity
 
 jobs:
   worker:
@@ -33,11 +32,11 @@ jobs:
       - name: Run Scraper Chunk
         run: python main.py --id ${{ matrix.chunk }} --sheet MF
 
-      - name: Upload MF Partial Data
+      - name: Upload ETF Partial Data
         uses: actions/upload-artifact@v6
         with:
-          name: ${{env.ARTIFACT_NAME}}-${{ matrix.chunk }}
-          path: csv/ajbell_${{ matrix.chunk }}_mf.csv
+          name: results-mf-csv-${{ matrix.chunk }}
+          path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_mf.csv
           if-no-files-found: error
 
   merge-results:
@@ -65,7 +64,7 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           path: csv
-          pattern: ${{env.ARTIFACT_NAME}}-*
+          pattern: results-mf-csv-*
           merge-multiple: true
 
       - name: Merge and Commit
@@ -74,7 +73,7 @@ jobs:
       - name: Upload Spreadsheet
         uses: actions/upload-artifact@v6
         with:
-          name: ajbell-mf
+          name: ${{env.PROJECT_NAME}}-MF
           path: spreadsheet
           if-no-files-found: error
 

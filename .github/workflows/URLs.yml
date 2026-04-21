@@ -5,10 +5,82 @@ on:
 
 env:
   IDLE_TIME: 60
-  OUTPUT_XLSX: ajbell.xlsx
+  OUTPUT_XLSX: fidelity.xlsx
 
 jobs:
   url-investment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12.3'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch URLs
+        run: python main.py --url Investment
+
+      - name: Upload Spreadsheet
+        uses: actions/upload-artifact@v6
+        with:
+          name: base-investment
+          path: spreadsheet/${{env.OUTPUT_XLSX}}
+          if-no-files-found: error
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "update: funds url"
+
+  wait-after-investment:
+    needs: url-investment
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep ${{ env.IDLE_TIME }}
+
+  url-etf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12.3'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch URLs
+        run: python main.py --url ETF
+
+      - name: Upload Spreadsheet
+        uses: actions/upload-artifact@v6
+        with:
+          name: base-ETF
+          path: spreadsheet/${{env.OUTPUT_XLSX}}
+          if-no-files-found: error
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "update: funds url"
+
+  wait-after-etf:
+    needs: url-etf
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep ${{ env.IDLE_TIME }}
+
+  url-mf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -28,7 +100,7 @@ jobs:
       - name: Upload Spreadsheet
         uses: actions/upload-artifact@v6
         with:
-          name: base-investment
+          name: base-mf
           path: spreadsheet/${{env.OUTPUT_XLSX}}
           if-no-files-found: error
 
