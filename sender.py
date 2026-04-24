@@ -23,7 +23,7 @@ msg.set_content("Please see attached.")
 with open(FILE, 'rb') as f:
     file_data = f.read()
     msg.add_attachment(file_data, maintype='application',
-                       subtype='pdf', filename=FILE)
+                       subtype='xlsx', filename=FILE)
 
 # Send via SMTP_SSL
 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:

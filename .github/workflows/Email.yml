@@ -6,7 +6,7 @@ on:
 env:
   EMAIL_USERNAME: ${{secrets.EMAIL_USERNAME}}
   EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
-  EMAIL_TO: ${{ secrets.EMAIL_DEV }}
+  EMAIL_DEV: ${{ secrets.EMAIL_DEV }}
 
 jobs:
   send-email:
