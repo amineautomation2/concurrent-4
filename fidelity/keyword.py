@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.webdriver import WebDriver
-from utils import delay, find_element_or_none, get_with_backoff
+from utils import delay, find_element_or_none
 
 
 def get_fidelity_keyword(driver: WebDriver, data: list[dict]) -> list[dict]:

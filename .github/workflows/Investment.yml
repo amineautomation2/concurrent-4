@@ -32,8 +32,8 @@ jobs:
       - name: Run Scraper Chunk
         run: python main.py --id ${{ matrix.chunk }} --sheet Investment
 
-      - name: Upload ETF Partial Data
-        uses: actions/upload-artifact@v6
+      - name: Upload Investment Partial Data
+        uses: actions/upload-artifact@v7
         with:
           name: results-investment-csv-${{ matrix.chunk }}
           path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_investment.csv
@@ -61,7 +61,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Download All Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           path: csv
           pattern: results-investment-csv-*
@@ -71,7 +71,7 @@ jobs:
         run: python main.py --sheet Investment
 
       - name: Upload Spreadsheet
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{env.PROJECT_NAME}}-Investment
           path: spreadsheet
