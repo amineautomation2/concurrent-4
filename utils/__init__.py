@@ -106,15 +106,6 @@ def clean_spreadsheet(filename: str) -> None:
     wb.close()
 
 
-def get_current_quarter(date_obj) -> str:
-    return f"Q{(date_obj.month - 1) // 3 + 1}"
-
-
-def email_title() -> str:
-    now = datetime.now()
-    return f"[Automation] {get_current_quarter(now)} report for Halifax - Chelsea Financial - iWeb - Quilter - Standard Life - Willis Owen"
-
-
 def get_xlsx_filepath(filename: str) -> str:
     project_root = Path(__file__).resolve().parent.parent
     return join(project_root, "spreadsheet", filename)
@@ -232,3 +223,12 @@ def parse_ajbell_data(data: list[dict], is_mf: bool) -> list[dict]:
                 url = f'{base}{exchange_code}:{symbol}'
         funds.append(dict(name=name, isin=isin, url=url))
     return funds
+
+
+def get_current_quarter(date_obj) -> str:
+    return f"Q{(date_obj.month - 1) // 3 + 1}"
+
+
+def email_title(title: str) -> str:
+    now = datetime.now()
+    return f"[Automation Summary] {get_current_quarter(now)} report for Halifax - Chelsea Financial - iWeb - Quilter - Standard Life - Willis Owen - Financial Discount"

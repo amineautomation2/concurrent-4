@@ -1,6 +1,7 @@
 import argparse
+import os
 import time
-from utils import delay, get_xlsx_filepath, save_xlsx
+from utils import get_xlsx_filepath, save_xlsx, email_title
 from fidelity import fidelity_runner, get_fidelity_urls
 from worker import (
     merge_csv_to_xlsx,
@@ -38,6 +39,9 @@ def main():
     elif args.sheet:
         merge_csv_to_xlsx(
             xlsx_out, ["name", "isin", "url", "keyword"], args.sheet)
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+            print(f"email_title={email_title("Fidelity report")}", file=fh)
+
         return
 
 
