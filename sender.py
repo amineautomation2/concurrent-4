@@ -14,16 +14,17 @@ filename = "fidelity.xlsx"
 FILE = get_xlsx_filepath(filename)
 # Create Message
 msg = EmailMessage()
-msg['Subject'] = email_title("Fidelity Report")
+msg['Subject'] = email_title("Fidelity")
 msg['From'] = EMAIL_FROM
 msg['To'] = EMAIL_TO
 msg.set_content("Please see attached.")
 
 # Attach File (Example: PDF)
 with open(FILE, 'rb') as f:
+    print(FILE)
     file_data = f.read()
     msg.add_attachment(file_data, maintype='application',
-                       subtype='xlsx', filename=FILE)
+                       subtype='xlsx', filename=filename)
 
 # Send via SMTP_SSL
 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:

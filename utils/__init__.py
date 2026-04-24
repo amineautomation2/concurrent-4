@@ -231,4 +231,4 @@ def get_current_quarter(date_obj) -> str:
 
 def email_title(title: str) -> str:
     now = datetime.now()
-    return f"[Automation Summary] {get_current_quarter(now)} report for Halifax - Chelsea Financial - iWeb - Quilter - Standard Life - Willis Owen - Financial Discount"
+    return f"[Automation Summary] {title} {get_current_quarter(now)} Report"
