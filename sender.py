@@ -15,7 +15,7 @@ FILE = get_xlsx_filepath(filename)
 # Create Message
 msg = EmailMessage()
 msg['Subject'] = email_title("Fidelity")
-msg['From'] = f"Amine <{EMAIL_FROM}>"
+msg['From'] = f"Amine Upwork <{EMAIL_FROM}>"
 msg['To'] = EMAIL_TO
 msg.set_content("Please see attached.")
 
