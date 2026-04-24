@@ -7,7 +7,7 @@ from utils import get_xlsx_filepath, email_title
 # Configuration
 
 # Get the secret from environment variables
-EMAIL_FROM = os.environ.get('EMAIL_FROM')
+EMAIL_FROM = os.environ.get('EMAIL_USERNAME')
 EMAIL_TO = os.environ.get('EMAIL_DEV')
 PASSWORD = os.environ.get('EMAIL_PASSWORD')
 filename = "fidelity.xlsx"
