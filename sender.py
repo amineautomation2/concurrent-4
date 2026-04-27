@@ -1,10 +1,16 @@
 import os
 import smtplib
 from email.message import EmailMessage
+from utils import get_xlsx_filepath
+from datetime import datetime
 
-from utils import get_xlsx_filepath, email_title
+def get_current_quarter(date_obj) -> str:
+    return f"Q{(date_obj.month - 1) // 3 + 1}"
 
-# Configuration
+
+def email_title(title: str) -> str:
+    now = datetime.now()
+    return f"[Automation Summary] {title} {get_current_quarter(now)} Report"
 
 # Get the secret from environment variables
 EMAIL_FROM = os.environ.get('EMAIL_USERNAME')
