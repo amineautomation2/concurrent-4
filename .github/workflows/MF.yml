@@ -40,7 +40,7 @@ jobs:
           if-no-files-found: error
 
   merge-results:
-    #needs: worker
+    needs: worker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
