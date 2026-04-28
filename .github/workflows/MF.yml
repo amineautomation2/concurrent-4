@@ -7,37 +7,37 @@ env:
   PROJECT_NAME: fidelity
 
 jobs:
-#  worker:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        chunk: [0, 1, 2, 3, 4] 
-#    
-#    steps:
-#      - name: Checkout Code
-#        uses: actions/checkout@v6
-#
-#      - name: Setup Python
-#        uses: actions/setup-python@v6
-#        with:
-#          python-version: '3.12.3'
-#
-#      - name: Install Dependencies
-#        run: pip install -r requirements.txt
-#
-#      - name: Cleanup CSV
-#        run: rm -rf csv/*_mf.csv
-#      
-#      - name: Run Scraper Chunk
-#        run: python main.py --id ${{ matrix.chunk }} --sheet MF
-#
-#      - name: Upload MF Partial Data
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: results-mf-csv-${{ matrix.chunk }}
-#          path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_mf.csv
-#          if-no-files-found: error
+  worker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0, 1, 2, 3, 4] 
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12.3'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Cleanup CSV
+        run: rm -rf csv/*_mf.csv
+      
+      - name: Run Scraper Chunk
+        run: python main.py --id ${{ matrix.chunk }} --sheet MF
+
+      - name: Upload MF Partial Data
+        uses: actions/upload-artifact@v7
+        with:
+          name: results-mf-csv-${{ matrix.chunk }}
+          path: csv/${{env.PROJECT_NAME}}_${{ matrix.chunk }}_mf.csv
+          if-no-files-found: error
 
   merge-results:
     #needs: worker
