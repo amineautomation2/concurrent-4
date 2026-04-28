@@ -31,7 +31,6 @@ jobs:
 
   run-etf-workflow:
     needs: wait-after-investment
-    if: always()
     uses: ./.github/workflows/ETF.yml
 
   wait-after-etf:
