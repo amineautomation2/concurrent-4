@@ -11,6 +11,7 @@ from worker import (
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--id", type=str, help="id worker")
+    parser.add_argument("--max", type=str, help="max worker")
     parser.add_argument("--sheet", type=str, help="sheet name")
     parser.add_argument("--url", action="store_true", help="sheet name")
 
@@ -32,16 +33,13 @@ def main():
         save_xlsx(xlsx_out, data, ["name", "isin", "url"], config["sheet"])
         return
 
-    elif args.id and args.sheet:
-        fidelity_runner(id=int(args.id), max_w=5, sheet=args.sheet)
+    elif args.id and args.max and args.sheet:
+        fidelity_runner(id=int(args.id), max_w=int(args.max), sheet=args.sheet)
         return
 
     elif args.sheet:
         merge_csv_to_xlsx(
             xlsx_out, ["name", "isin", "url", "keyword"], args.sheet)
-        with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-            print(f"email_title={email_title("Fidelity report")}", file=fh)
-
         return
 
 
